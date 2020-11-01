@@ -1,3 +1,7 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "imgui-SFML.h"
 #include "imgui.h"
 
@@ -7,8 +11,11 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "FileHandler.h"
+
 int main() {
-    sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3");
+	
+    sf::RenderWindow window(sf::VideoMode(800, 600), "ImGui + SFML = <3");
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
@@ -26,9 +33,6 @@ int main() {
 	sf::Sprite sprite3(texture_inductor);
 	sf::Sprite sprite4(texture_cvs);
     
-    //sprite1.setOrigin(sf::Vector2f(texture_resistor.getSize()) / 2.f);
-    //sprite1.setPosition(sprite1.getOrigin());
-
     sf::Clock deltaClock;
     while (window.isOpen()) {
         sf::Event event;
@@ -39,22 +43,43 @@ int main() {
                 window.close();
             }
         }
-		
+			
 		static const auto size = ImVec2(150, 40);
 
         ImGui::SFML::Update(window, deltaClock.restart());
-
+		
         ImGui::Begin("MENU");
 		ImGui::ImageButton(sprite1);
 		ImGui::ImageButton(texture_capacitor);
 		ImGui::ImageButton(texture_inductor);
 		ImGui::ImageButton(sprite4);
 		ImGui::Button("SIMULATE", size);
+		
+		static char inputlength[20] = {};
+		ImGui::InputText("savename", inputlength, sizeof(inputlength));
+	
         if (ImGui::Button("SAVE", size)) {
+			
+			std::string path = "resources/";
+			std::string fname = inputlength;
+			const char *ending = ".txt";
+			std::string f = path + fname + ending;
+		
+			saveAsText(f);
 			shape.setFillColor(sf::Color::Red);
 		}
 		
+		static char loading[20] = {};
+		ImGui::InputText("loadname", loading, sizeof(loading));
+			
 		if (ImGui::Button("LOAD", size) ){
+			
+			std::string path = "resources/";
+			std::string a = loading;
+			const char *b = ".txt";
+			std::string f = path + a + b;
+			
+			loadFromFile(f);
 			shape.setFillColor(sf::Color::Green);
 		}
 		
