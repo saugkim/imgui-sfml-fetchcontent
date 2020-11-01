@@ -15,16 +15,18 @@ int main() {
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 	
-	sf::Texture texture1, texture2, texture_inductor, texture_cvs;
-    if ( !texture1.loadFromFile("resources/resistor.png") ||
-		 !texture2.loadFromFile("resources/capacitor.png") ||
+	sf::Texture texture_resistor, texture_capacitor, texture_inductor, texture_cvs;
+    if ( !texture_resistor.loadFromFile("resources/resistor.png") ||
+		 !texture_capacitor.loadFromFile("resources/capacitor.png") ||
 		 !texture_inductor.loadFromFile("resources/inductor.png") || 
 		 !texture_cvs.loadFromFile("resources/power.png") )
         return EXIT_FAILURE;
-    sf::Sprite sprite1(texture1);
+    sf::Sprite sprite1(texture_resistor);
+	sf::Sprite sprite2(texture_capacitor);
+	sf::Sprite sprite3(texture_inductor);
 	sf::Sprite sprite4(texture_cvs);
-    sf::Sprite sprite2(texture2);
-    //sprite1.setOrigin(sf::Vector2f(texture1.getSize()) / 2.f);
+    
+    //sprite1.setOrigin(sf::Vector2f(texture_resistor.getSize()) / 2.f);
     //sprite1.setPosition(sprite1.getOrigin());
 
     sf::Clock deltaClock;
@@ -37,17 +39,25 @@ int main() {
                 window.close();
             }
         }
+		
+		static const auto size = ImVec2(150, 40);
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
         ImGui::Begin("MENU");
 		ImGui::ImageButton(sprite1);
-		ImGui::ImageButton(texture2);
+		ImGui::ImageButton(texture_capacitor);
 		ImGui::ImageButton(texture_inductor);
 		ImGui::ImageButton(sprite4);
-		ImGui::Button("Simulate");
-        ImGui::Button("SAVE");
-		ImGui::Button("LOAD");
+		ImGui::Button("SIMULATE", size);
+        if (ImGui::Button("SAVE", size)) {
+			shape.setFillColor(sf::Color::Red);
+		}
+		
+		if (ImGui::Button("LOAD", size) ){
+			shape.setFillColor(sf::Color::Green);
+		}
+		
         ImGui::End();
 
         window.clear();
@@ -60,4 +70,3 @@ int main() {
 
     return 0;
 }
-
