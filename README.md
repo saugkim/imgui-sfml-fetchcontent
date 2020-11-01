@@ -1,3 +1,16 @@
+Build using CMake (windows GUI version)
+Create own build directory(any name any place)
+Select source and build directory
+-> MinGW Makefiles as defaults
+-> Configure
+-> Generate 
+
+Go to build directory
+mingw32-make (windows)
+Go to src 
+run exe
+
+
 (WIP) CMake FetchContent example
 ==========================
 
