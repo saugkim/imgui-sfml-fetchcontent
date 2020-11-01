@@ -1,15 +1,23 @@
-Build using CMake (windows GUI version)
+System: Windows10
 
-Create own build directory(any name any place)
 
-Select source and build directory
--> MinGW Makefiles as defaults
+Program required
+ CMake, Mingw64(or something else) 
+
+
+Build using CMake (cmake-gui)
+
+Create own build directory(any name, any place)
+
+Select source directory and build directory
+-> MinGW Makefiles
+-> defaults
 -> Configure
 -> Generate 
 
 Go to build directory
 
-mingw32-make (windows)
+mingw32-make 
 
 Go to src 
 
