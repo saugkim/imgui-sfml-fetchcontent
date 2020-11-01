@@ -24,7 +24,12 @@ Options
 You can also set the following options when building:
 
 * `USE_SYSTEM_DEPS` (`OFF` by default) - search for SFML installed on system instead of fetching it
+## in my windows10 sysstem, USE_SYSTEM_DEPS option ON not working 
+## fatal error: SFML/System/Vector2.hpp: No such file or directory
+##  #include <SFML/System/Vector2.hpp>
+ 
 * `LINK_DEPS_STATIC` (`ON` by default) - link dependencies statically
+
 
 Depencies
 ---
