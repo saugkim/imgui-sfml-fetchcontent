@@ -15,7 +15,7 @@
 
 int main() {
 	
-    sf::RenderWindow window(sf::VideoMode(800, 600), "ImGui + SFML = <3");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "Main Panel");
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
@@ -48,13 +48,23 @@ int main() {
 
         ImGui::SFML::Update(window, deltaClock.restart());
 		
-        ImGui::Begin("MENU");
+		ImGui::Begin("CIRCUIT ELEMENTS");
 		ImGui::ImageButton(sprite1);
 		ImGui::ImageButton(texture_capacitor);
 		ImGui::ImageButton(texture_inductor);
 		ImGui::ImageButton(sprite4);
-		ImGui::Button("SIMULATE", size);
 		
+		ImGui::Button("SIMULATE", size);
+		ImGui::End();
+		
+		
+        ImGui::Begin("FILE");
+		//ImGui::ImageButton(sprite1);
+		//ImGui::ImageButton(texture_capacitor);
+		//ImGui::ImageButton(texture_inductor);
+		//ImGui::ImageButton(sprite4);
+		//ImGui::Button("SIMULATE", size);
+			
 		static char inputlength[20] = {};
 		ImGui::InputText("savename", inputlength, sizeof(inputlength));
 	
@@ -81,10 +91,43 @@ int main() {
 			
 			loadFromFile(f);
 			shape.setFillColor(sf::Color::Green);
+		}	
+        ImGui::End();
+	
+	
+	
+		bool my_tool_active = false;
+		ImGui::Begin("FILE HANDLING", &my_tool_active, ImGuiWindowFlags_MenuBar);
+		if (ImGui::BeginMenuBar())
+		{	
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Open..", "Ctrl+O")) { 
+					saveAsText("resources/test.txt"); 
+				}
+				if (ImGui::MenuItem("Save", "Ctrl+S"))   { 
+					loadFromFile("resources/test.txt");
+				}
+				if (ImGui::MenuItem("Close", "Ctrl+W"))  { 
+					my_tool_active = false; 
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenuBar();
 		}
 		
-        ImGui::End();
+		const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+		ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
 
+		// Display contents in a scrolling region
+		//ImGui::TextColored(ImVec4(1,1,0,1), "Important Stuff");
+		//ImGui::BeginChild("Scrolling");
+		//for (int n = 0; n < 10; n++)
+		//	ImGui::Text("%04d: Some text", n);
+		//ImGui::EndChild();
+		ImGui::End();
+		
+		
         window.clear();
         window.draw(shape);
         ImGui::SFML::Render(window);
