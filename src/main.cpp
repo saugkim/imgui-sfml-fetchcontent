@@ -44,34 +44,33 @@ int main() {
             }
         }
 			
-		static const auto size = ImVec2(150, 40);
+		static const auto size = ImVec2(150, 50);
 
         ImGui::SFML::Update(window, deltaClock.restart());
 		
 		ImGui::Begin("CIRCUIT ELEMENTS");
 		ImGui::ImageButton(sprite1);
-		ImGui::ImageButton(texture_capacitor);
+		ImGui::ImageButton(sprite2);
 		ImGui::ImageButton(texture_inductor);
 		ImGui::ImageButton(sprite4);
-		
+		ImGui::Spacing();
 		ImGui::Button("SIMULATE", size);
 		ImGui::End();
 		
 		
+		static const auto size1 = ImVec2(100, 30);
         ImGui::Begin("FILE");
-		//ImGui::ImageButton(sprite1);
-		//ImGui::ImageButton(texture_capacitor);
-		//ImGui::ImageButton(texture_inductor);
-		//ImGui::ImageButton(sprite4);
-		//ImGui::Button("SIMULATE", size);
-			
-		static char inputlength[20] = {};
-		ImGui::InputText("savename", inputlength, sizeof(inputlength));
+		
+		static char savelength[20] = {};
+		ImGui::InputText("filename###save", savelength, sizeof(savelength));
+		ImGui::SameLine();
 	
-        if (ImGui::Button("SAVE", size)) {
+        if (ImGui::Button("SAVE", size1)) {
 			
 			std::string path = "resources/";
-			std::string fname = inputlength;
+			std::string fname = savelength;
+			std::cout << fname.length() << std::endl;
+			fname = fname.length() >0 ? fname : "default";
 			const char *ending = ".txt";
 			std::string f = path + fname + ending;
 		
@@ -79,10 +78,12 @@ int main() {
 			shape.setFillColor(sf::Color::Red);
 		}
 		
+		ImGui::Spacing();
+		
 		static char loading[20] = {};
-		ImGui::InputText("loadname", loading, sizeof(loading));
-			
-		if (ImGui::Button("LOAD", size) ){
+		ImGui::InputText("filename###load", loading, sizeof(loading));
+		ImGui::SameLine();
+		if (ImGui::Button("LOAD", size1) ){
 			
 			std::string path = "resources/";
 			std::string a = loading;
@@ -95,9 +96,9 @@ int main() {
         ImGui::End();
 	
 	
-	
+		static const auto size2 = ImVec2(150, 30);
 		bool my_tool_active = false;
-		ImGui::Begin("FILE HANDLING", &my_tool_active, ImGuiWindowFlags_MenuBar);
+		ImGui::Begin("DEMO", &my_tool_active, ImGuiWindowFlags_MenuBar);
 		if (ImGui::BeginMenuBar())
 		{	
 			if (ImGui::BeginMenu("File"))
@@ -116,8 +117,23 @@ int main() {
 			ImGui::EndMenuBar();
 		}
 		
-		const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
-		ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
+		ImGui::Button("DEMO1", size2);
+		ImGui::SameLine(150, 20);
+		ImGui::Button("DEMO2", size2);
+		ImGui::SameLine(320, 20);
+		ImGui::Button("DEMO3", size2);
+		ImGui::Spacing();
+		
+		ImGui::Text("Demo 1: ...\nVoltage 5V\nResistor 1, 10 ohm\n");
+		ImGui::SameLine(150, 20);
+		ImGui::Text("Demo 2: \nVoltage 10V\nCapacitor \n");
+		ImGui::SameLine(320, 20);
+		ImGui::Text("Demo 3: ...");
+		
+		ImGui::Spacing();
+		
+		//const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+		//ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
 
 		// Display contents in a scrolling region
 		//ImGui::TextColored(ImVec4(1,1,0,1), "Important Stuff");
