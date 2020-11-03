@@ -1,4 +1,4 @@
-https://readthedocs.org/projects/circuit-simulator-1-kim/
+https://circuit-simulator-1-kim.readthedocs.io/en/latest/intro.html
 
 System: Windows10
 
