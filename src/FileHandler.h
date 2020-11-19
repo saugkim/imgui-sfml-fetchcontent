@@ -1,16 +1,21 @@
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <string>
 
-void saveAsText(const std::string filename) {
+
+void saveAsText(const std::string filename, std::string& content) {
 	
+	std::string path_tosave = "resources/";
+	const char *file_ending = ".txt";
+	std::string f = path_tosave + filename + file_ending;
+			
 	std::ofstream myfile;
-	myfile.open (filename);
+	myfile.open(f);
 	
 	if (myfile.is_open()){
-		myfile << "This is a line.\n";
-		myfile << "This is another line.\n";
+		myfile << content;
 		myfile.close();
 	}
 	else {
@@ -18,11 +23,32 @@ void saveAsText(const std::string filename) {
 		return;
 	}
 	
-	std::cout << "Text will be saved to " << filename << std::endl;
+	std::cout << "Data will be saved to " << filename << std::endl;
 }
 
-int loadFromFile(const std::string filename) {
+std::string loadFromFile(const std::string filename) {
 	
+	std::string path = "resources/";
+	//std::string a = filename;
+	const char *b = ".txt";
+	std::string f = path + filename + b;
+	
+	std::string output;
+	std::ostringstream oss;
+	std::ifstream myfile(f);
+	
+	if(myfile.is_open()) {
+		oss << myfile.rdbuf();
+		output = oss.str();
+		myfile.close();
+	} else {
+		std::cout << "Unable to open file" << std::endl;
+		output = "";
+	}
+	
+	return output;
+	
+	/*
 	std::ifstream myfile(filename);
 	std::string line;
 	if (myfile.is_open())
@@ -40,5 +66,5 @@ int loadFromFile(const std::string filename) {
 	
 	std::cout << "Data is loaded from " << filename << std::endl;
 	return 1;
-	
+	*/
 }
