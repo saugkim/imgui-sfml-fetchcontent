@@ -33,6 +33,12 @@ release = '0.0.0'
 extensions = [
 ]
 
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
+source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -41,6 +47,9 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+rst_epilog = """
+.. |psf| replace:: Python Software Foundation
+"""
 
 # -- Options for HTML output -------------------------------------------------
 
